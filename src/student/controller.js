@@ -22,7 +22,14 @@ const addStudent = (req, res) => {
     if (results.rows.length) {
       res.send("This email already exists");
     } else {
-      res.send("We will add it to the db");
+      pool.query(
+        queries.addStudent,
+        [name, email, age, dob],
+        (error, results) => {
+          if (error) throw error;
+          res.status(201).send("Student Created Successfully");
+        }
+      );
     }
   });
 };
